@@ -3,6 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
 export default function App() {
+  var ws = new WebSocket("ws://localhost:1337/");
+
+  ws.onopen = () => {
+      ws.send("Hi, from the client."); // this works
+  };
+
   const [{ x, y, z }, setData] = useState({
     x: 0,
     y: 0,
