@@ -22,14 +22,16 @@ const wss = new WebSocket.Server(
 wss.on('connection', (ws, req) => {
 
     //adres ip klienta
-
-    const clientip = req.connection.remoteAddress;
+    // console.log(ws);
 
     //reakcja na komunikat od klienta
 
-    ws.on('message', (message) => {
-        console.log('serwer odbiera z klienta ' + clientip + ": ", message);
-        ws.send('serwer odsyła do klienta -> ' + message);
-    });
-
+    ws.onmessage = (message) => {
+        console.log('serwer odbiera: ', message.data);
+        wss.clients.forEach((client) => {//wyslij do klienta nie bedacego telefonem
+            if (client !== ws) {
+                client.send(message.data)
+            }
+        })
+    }
 });

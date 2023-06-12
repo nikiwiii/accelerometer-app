@@ -3,11 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
 export default function App() {
-  var ws = new WebSocket("ws://localhost:1337/");
-
-  ws.onopen = () => {
-      ws.send("Hi, from the client."); // this works
-  };
+  const ws = new WebSocket("ws://192.168.10.112:1337/");
 
   const [{ x, y, z }, setData] = useState({
     x: 0,
@@ -16,12 +12,14 @@ export default function App() {
   });
   const [subscription, setSubscription] = useState(null);
 
-  const _slow = () => Accelerometer.setUpdateInterval(1000);
-  const _fast = () => Accelerometer.setUpdateInterval(16);
+  Accelerometer.setUpdateInterval(300);
 
   const _subscribe = () => {
     setSubscription(
-      Accelerometer.addListener(setData)
+      Accelerometer.addListener((e) => {
+        setData(e)
+        ws.send(JSON.stringify({x: e['x'], y: e['y'], z: e['z']}))
+      })
     );
   };
 
@@ -44,12 +42,6 @@ export default function App() {
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
           <Text>{subscription ? 'On' : 'Off'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
-          <Text>Slow</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_fast} style={styles.button}>
-          <Text>Fast</Text>
         </TouchableOpacity>
       </View>
     </View>
