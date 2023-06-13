@@ -46,3 +46,23 @@
   left: 50%;
   transform: translateX(-50%);
 }
+.wall {
+  width: 25%;
+}
+.fkinwall {
+  mix-blend-mode: darken;
+  background: linear-gradient(45deg,red, grey);
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition-duration: 0s;
+}
+.shade * {
+  border-radius: 0 !important;
+  padding-top: 15px;
+}
