@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
 export default function App() {
-  const ws = new WebSocket("ws://192.168.119.116:1337/");
+  const ws = new WebSocket("ws://192.168.xxx.xxx:1337/");
 
   const [{ x, y, z }, setData] = useState({
     x: 0,
