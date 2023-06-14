@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 
 export default function App() {
-  const ws = new WebSocket("ws://192.168.10.112:1337/");
+  const ws = new WebSocket("ws://192.168.119.116:1337/");
 
   const [{ x, y, z }, setData] = useState({
     x: 0,
@@ -18,7 +18,7 @@ export default function App() {
     setSubscription(
       Accelerometer.addListener((e) => {
         setData(e)
-        ws.send(JSON.stringify({x: e['x'], y: e['y'], z: e['z']}))
+        ws.send(JSON.stringify({ x: e['x'], y: e['y'], z: e['z'] }))
       })
     );
   };
@@ -35,13 +35,12 @@ export default function App() {
 
   return (
     <View style={styles.all}>
-      <Text style={styles.text}>Accelerometer: (in gs where 1g = 9.81 m/s^2)</Text>
       <Text style={styles.text}>x: {x}</Text>
       <Text style={styles.text}>y: {y}</Text>
       <Text style={styles.text}>z: {z}</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
-          <Text>{subscription ? 'On' : 'Off'}</Text>
+          <Text style={{ color: 'white' }}>{subscription ? 'On' : 'Off'}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -50,9 +49,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   all: {
-    marginTop: 50,
+    marginTop: 300,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    padding: 50,
+    borderRadius: 100,
+    backgroundColor: 'red',
   }
 }); 
