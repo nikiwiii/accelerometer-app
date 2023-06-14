@@ -16,7 +16,7 @@ export class App extends React.Component {
   }
   failChecked = false
   chosen = 8
-  ws = new WebSocket('ws://192.168.119.116:1337')
+  ws = new WebSocket('ws://192.168.xxx.xxx:1337')
   componentDidMount() {
     this.ws.onopen = () => {
       console.log('połączono');
